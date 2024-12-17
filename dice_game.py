@@ -3,7 +3,13 @@ import random
 def initialize_game():
     """I wrote the code below to be the setup for the game, which will define the target score to win (25) and ask players to enter their names, which can be a fun way to personalize the game for each round if a bigger group of players wants to take turns."""
     target_score = 25
-    players = input("Enter player names separated by commas:").split(',')
+    players = input("Enter player names separated by commas: ").split(',')
+    
+    #if no player names were entered, then print an error and exit
+    if not players:
+        print("Error: At least one player name is required.")
+        exit()
+    
     scores = {player: 0 for  player in players}
     return target_score, players, scores 
 
@@ -34,7 +40,7 @@ def play_turn(player):
 
             while True:
                 try: 
-                    reroll = input("Do you want to reroll the non-fixed dice? (yes/no)").strip().lower()
+                    reroll = input("Do you want to reroll the non-fixed dice? (yes/no): ").strip().lower()
                     if reroll == "yes":
                         # should now change the tuple back to the way it originally was (a list) to change the non-fixed dice
                         dice_list = list(dice)
@@ -47,10 +53,13 @@ def play_turn(player):
                         if dice[0] == dice[1] == dice[2]:
                             print("Tupled out! Zero points for this turn.")
                             return 0
+                        else:
+                            print(f"Final roll for {player}: {dice}. Turn score: {sum(dice)}")
+
                     elif reroll == "no":
                         break
                     else: 
-                        print("Invalid input. Please enter 'yes' or 'no'.") 
+                        print("Invalid input. Please enter 'yes' or 'no': ") 
                 except Exception as err: 
                     print(f"An error occurred: {err}")
                     continue 
